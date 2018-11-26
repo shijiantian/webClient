@@ -3,13 +3,81 @@
   <head>
     <meta charset="utf-8">
     <title>水电开支统计</title>
-    <script src="../js/jquery-3.3.1.js"></script>
-    <script src="../js/user.js"></script>
-    <script src="../js/login.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/user.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+    <script type="text/javascript" src="../js/expense.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui-datepicker-zh-CN.js"></script>
+    <script type="text/javascript" src="../js/jqPaginator.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/table.css">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="shortcut icon" href="../icon/favicon.ico">
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#expenseDate').datepicker($.datepicker.regional['zh-CN']).datepicker("setDate", new Date());
+        var totalPage=getExpenseHistory(1);
+        $.jqPaginator('#pagination1', {
+          totalPages: totalPage,
+          visiblePages: 4,
+          currentPage: 1,
+          onPageChange: function (num, type) {
+            //type为init和change两种，如果不设置判断init时会多请求一次
+            if(type==='change'){
+              getExpenseHistory(num);
+            }
+          }
+        }); 
+      });
+    </script>
+    
   </head>
   <body>
+    
     <button type="button" name="logoutButton" onclick="logoutFunc()">注销</button>
-    <button type="button" name="button" onclick="getUsers()">获取用户信息</button><br>
+    <button type="button" name="button" onclick="getUsers()">获取用户信息</button>
     <label id="userInfoLable"></label>
+    <br>
+    <div >
+      <div class="title">
+        <lable >水电开销录入</lable>
+      </div>
+      <form id="newData" class="newData">
+        <label>年月</label>
+        <input type="text" readonly="readonly" id="expenseDate" name="expenseDate">
+        <label>水表数值(吨):</label>
+        <input id="waterCount" name="waterCount">
+        <label>用水价格(元/吨)</label>
+        <input id="waterPrice" value="8" name="waterPrice">
+        <label>电表数值(度):</label>
+        <input id="elecCount" name="elecCount">
+        <label>用电价格(元/度)</label>
+        <input id="elecPrice" value="1.5" name="elecPrice">
+        <input type="button" value="确认" onclick="addNewData()">
+      </form>
+    </div>
+
+    <div class="clear">
+      <div class="paginationDiv">
+        <table class="historyTable" id="historyTable">
+            <caption >往月水电明细</caption>
+            <tr>
+              <th>年月</th>
+              <th>用水量(吨)</th>
+              <th>水费(元)</th>
+              <th>用电量(度)</th>
+              <th>电费(元)</th>
+              <th>总计(元)</th>
+            </tr>
+          </table>
+        <ul style="display: inline-block" class="pagination" id="pagination1"></ul>
+      </div>
+      <div class="chartDiv">
+        
+      </div>
+    </div>
   </body>
 </html>

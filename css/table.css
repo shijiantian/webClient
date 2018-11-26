@@ -1,0 +1,28 @@
+.historyTable{
+    border: 1px solid #3071a9;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.historyTable caption{
+    color: red;
+    font-size: 20px;
+}
+
+.historyTable th{
+    border: 1px solid #3071a9;
+    text-align: center;
+    color: #3071a9;
+    width: 10%;
+}
+
+.historyTable td{
+    border: 1px solid #3071a9;
+    text-align: center;
+    color:#3071a9;
+    height: 20px;
+}
+
+.newData input{
+    width:10%;
+}

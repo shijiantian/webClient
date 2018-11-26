@@ -5,7 +5,7 @@ function getUsers(){
     type: 'GET',
     headers: {'Authorization':access_token},
     success:function(data){
-      $('#userInfoLable').text(JSON.stringify(data));
+      $('#userInfoLable').text(data.result);
     },
     error:function(jqXHR,textStatus,errorThrown){
       if(jqXHR.status==401){
