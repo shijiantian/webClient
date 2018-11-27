@@ -15,11 +15,12 @@ function getExpenseHistory(pageNo){
                         data.result[i].waterPrice,data.result[i].elecCount,
                         data.result[i].elecPrice);
             });
+            setEchart(data);
         },
         error:function(jqXHR,textStatus,errorThrown){
             if(jqXHR.status===401){
               refreshAccessToken();
-              getExpenseHistory();
+              getExpenseHistory(pageNo);
             }
         }
     });
@@ -73,4 +74,34 @@ function addRow(date,water,waterPrice,electricity,elecPrice){
 function addNewData(){
     setExpenseHistory();
     getExpenseHistory(1);
+}
+
+function setEchart(data){
+    var myChart = echarts.init(document.getElementById('echartMain'));
+    
+    // 指定图表的配置项和数据
+    var option = {
+        title: data.addition.title,
+        tooltip: {},
+        toolbox: {
+            show: true,
+            right: '5%',
+            feature: {
+                dataView: {
+                    readOnly: true              
+                },
+                magicType: {type: ['line', 'bar']}
+            }
+        },
+        legend: data.addition.legend,
+        xAxis: data.addition.xAxis,
+        yAxis: {
+            type:'value',
+            axisLabel:{formatter:'{value}元'}
+        },
+        series:data.addition.series
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 }
