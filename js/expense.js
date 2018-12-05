@@ -21,6 +21,10 @@ function getExpenseHistory(pageNo){
             if(jqXHR.status===401){
               refreshAccessToken();
               getExpenseHistory(pageNo);
+            }else{
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
             }
         }
     });
@@ -43,7 +47,7 @@ function setExpenseHistory(){
         async:false,
         contentType: "application/json",
         success:function(){
-            alert('success');
+            getExpenseHistory(1);
         },
         error:function(jqXHR,textStatus,errorThrown){
             if(jqXHR.status==401){
@@ -73,7 +77,6 @@ function addRow(date,water,waterPrice,electricity,elecPrice){
 
 function addNewData(){
     setExpenseHistory();
-    getExpenseHistory(1);
 }
 
 function setEchart(data){
