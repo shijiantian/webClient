@@ -87,3 +87,11 @@ function getAccessToken2(){
 function getRefreshToken(){
   return window.localStorage.getItem('refresh_token');
 }
+
+function keyDown(event){
+  //使用keyCode和which支持不同浏览器
+  var keyValue = event.which || event.keyCode;
+  if(keyValue===13){
+    loginFunc();
+  }
+}
