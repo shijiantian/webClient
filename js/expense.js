@@ -3,7 +3,7 @@ function getExpenseHistory(pageNo){
     var pageSize=5;
     var totalPage;
     $.ajax({
-        url:'http://127.0.0.1:8083/api/getHistoryExpense/'+pageNo+'/'+pageSize,
+        url:serverAddr+'/api/getHistoryExpense/'+pageNo+'/'+pageSize,
         method:'get',
         headers: {'Authorization':access_token},
         async:false,
@@ -40,7 +40,7 @@ function setExpenseHistory(){
     });
     var jsonObject=JSON.stringify(jsonData);
     $.ajax({
-        url:'http://127.0.0.1:8083/api/setHistoryExpense',
+        url:serverAddr+'/api/setHistoryExpense',
         method:'post',
         headers: {'Authorization':access_token},
         data:jsonObject,
@@ -107,4 +107,24 @@ function setEchart(data){
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+}
+
+function getExcel(){
+    var access_token=getAccessToken1();
+    $.ajax({
+        url:serverAddr+'/api/getExcel',
+        method:'get',
+        headers: {'Authorization':access_token},
+        success:function(data){
+            var index=data.result.lastIndexOf('\/');
+            var fileName=data.result.substring(index+1,data.result.length);
+            var a = document.createElement('a');
+            a.href = data.result;
+            a.download = fileName;
+            a.click();
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+
+        }
+    });
 }

@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>水电开支统计</title>
+    <script type="texe/javascript" src="../js/global.js"></script>
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../js/user.js"></script>
     <script type="text/javascript" src="../js/login.js"></script>
@@ -41,6 +42,7 @@
     
     <button type="button" name="logoutButton" onclick="logoutFunc()">注销</button>
     <button type="button" name="button" onclick="getUsers()">获取用户信息</button>
+    <button type="button" id="exportExcel" onclick="getExcel()">导出Excel</button>
     <label id="userInfoLable"></label>
     <br>
     <div >
