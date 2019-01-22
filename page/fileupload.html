@@ -3,19 +3,17 @@
   <head>
     <title>文件上传</title>
     <meta charset="utf-8" />
+    <script src="../js/global.js"></script>
+    <script src="../js/resumable.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fileInput.css">
   </head>
   <body>
     <div id="frame">
 
-      <script src="../js/jquery-3.3.1.js"></script>
-      <script src="../js/resumable.js"></script>
-      <script src="../js/global.js"></script>
-
-     
-
       <div class="resumable-drop">
-        <a class="resumable-browse"><u>点此上传</u></a>
+        <a class="resumable-browse file"><u style="text-decoration:none">点击此处上传文件</u></a>
       </div>
       
       <div class="resumable-progress">
@@ -36,8 +34,8 @@
       <script>
         var r = new Resumable({
             target:serverAddr+'/openapi/fileUpload',
-            chunkSize:1*1024*1024,
-            simultaneousUploads:4,
+            chunkSize:2*1024*1024,
+            simultaneousUploads:10,
             testChunks: true,
             throttleProgressCallbacks:1,
             method: "octet"
