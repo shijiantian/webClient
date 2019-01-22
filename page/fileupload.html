@@ -56,7 +56,7 @@
               $('.resumable-progress .progress-resume-link').hide();
               $('.resumable-progress .progress-pause-link').show();
               // Add the file to the list
-              $('.resumable-list').append('<li class="resumable-file-'+file.uniqueIdentifier+'">Uploading <span class="resumable-file-name"></span> <span class="resumable-file-progress"></span>');
+              $('.resumable-list').append('<li class="resumable-file-'+file.uniqueIdentifier+'">上传 <span class="resumable-file-name"></span> <span class="resumable-file-progress"></span>');
               $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-name').html(file.fileName);
               // Actually start the upload
               r.upload();
@@ -72,7 +72,7 @@
             });
           r.on('fileSuccess', function(file,message){
               // Reflect that the file upload has completed
-              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(completed)');
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(上传完成)');
             });
           r.on('fileError', function(file, message){
               // Reflect that the file upload has resulted in error
