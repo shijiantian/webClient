@@ -3,7 +3,7 @@ function loginFunc(){
   var passWord=$("#password").val();
   $.ajax({
       type:'POST',
-      url:'http://127.0.0.1:8083/oauth/token',
+      url:serverAddr+'/oauth/token',
       data:{
         grant_type:'password',
         username:userName,
@@ -32,7 +32,7 @@ function refreshAccessToken(){
   $.ajax({
     async:false,
     type:'POST',
-    url:'http://127.0.0.1:8083/oauth/token',
+    url:serverAddr+'/oauth/token',
     data:{
       grant_type:'refresh_token',
       client_id:'myClient',
@@ -56,10 +56,10 @@ function refreshAccessToken(){
 function logoutFunc(){
   var access_token=getAccessToken2();
   var refresh_token=getRefreshToken();
-  var redirect_dir='http://localhost/webClient/login.html';
+  var redirect_dir=serverIp+'/webClient/login.html';
   $.ajax({
     type:'POST',
-    url:'http://localhost:8083/api/logout',
+    url:serverAddr+'/api/logout',
     headers: {'Authorization':getAccessToken1()},
     data:{
       refresh_token:refresh_token,
@@ -75,18 +75,6 @@ function logoutFunc(){
   });
 }
 
-function getAccessToken1(){
-  var result=window.localStorage.getItem('access_type')+' '+window.localStorage.getItem('access_token');
-  return result;
-}
-
-function getAccessToken2(){
-  return window.localStorage.getItem('access_token');
-}
-
-function getRefreshToken(){
-  return window.localStorage.getItem('refresh_token');
-}
 
 function keyDown(event){
   //使用keyCode和which支持不同浏览器

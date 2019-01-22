@@ -4,21 +4,27 @@
     <title>登录界面</title>
     <script src="js/login.js"></script>
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/global.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="shortcut icon" href="./icon/favicon.ico">
   </head>
   <body>
-    <form>
-      <table>
-        <tr>
-          <th>name</th>
-          <td><input type="text" id="username" value="" onkeydown="keyDown(event)"></td>
-        </tr>
-        <tr>
-          <th>password</th>
-          <td><input type="password" id="password" value="" onkeydown="keyDown(event)"></td>
-        <tr>
-      </table>
-      <button type="button" id="loginButton" name="loginbutton" onclick="loginFunc()">登录</button>
-    </form>
+    <div class="loginTableDiv">
+      <form>
+        <table>
+          <tr>
+            <th>name</th>
+            <td><input type="text" id="username" value="" onkeydown="keyDown(event)"></td>
+          </tr>
+          <tr>
+            <th>password</th>
+            <td><input type="password" id="password" value="" onkeydown="keyDown(event)"></td>
+          <tr>
+        </table>
+        <button type="button" id="loginButton" name="loginbutton" onclick="loginFunc()">登录</button>
+        <button type="button" onclick="{location.href='page/userRegistration.html'}">注册</button>
+        <button type="button" onclick="{location.href='page/fileupload.html'}">文件上传</button>
+      </form>
+    </div>
   </body>
 </html>

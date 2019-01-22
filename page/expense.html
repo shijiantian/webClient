@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>水电开支统计</title>
-    <script type="texe/javascript" src="../js/global.js"></script>
+    <script src="../js/global.js"></script>
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../js/user.js"></script>
     <script type="text/javascript" src="../js/login.js"></script>
@@ -14,6 +14,7 @@
     <script type="text/javascript" src="../js/echarts.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/table.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/fileInput.css">
     <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
     <link rel="shortcut icon" href="../icon/favicon.ico">
@@ -34,20 +35,44 @@
           }
         });
         
+        $(".file").on("change","input[type='file']",function(){
+            var filePath=$(this).val();
+            if(filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
+                var arr=filePath.split('\\');
+                var fileName=arr[arr.length-1];
+                $(".showFileName").html(fileName);
+            }else{
+                $(".showFileName").html("您未上传文件，或者您上传文件类型有误！").show();
+                return false 
+            }
+        })
       });
     </script>
     
   </head>
   <body>
     
-    <button type="button" name="logoutButton" onclick="logoutFunc()">注销</button>
-    <button type="button" name="button" onclick="getUsers()">获取用户信息</button>
-    <button type="button" id="exportExcel" onclick="getExcel()">导出Excel</button>
+    <div>
+      <form id="fileUploadForm" enctype="multipart/form-data" style="display: inline;">
+          <a href="javascript:;" class="file">
+            <input type="file" id="importFile" name="importFile" >选择导入excel文件
+          </a>
+      </form>
+      <button type="button" id="importExcel" onclick="importExcel()">导入水表电表数据</button>
+      <p class="showFileName"  style="display: inline; color: red;"></p>
+      <div style="display: inline;">
+        <button type="button" id="exportExcel" onclick="getExcel(1)">导出水电开支明细</button>
+        <button type="button" id="exportExcel" onclick="getExcel(2)">导出水表电表数据</button>
+        <button type="button" name="button" onclick="getUsers()">获取用户信息</button>
+        <button type="button" name="logoutButton" onclick="logoutFunc()">注销</button>
+      </div>
+    </div>
+    
     <label id="userInfoLable"></label>
     <br>
     <div >
       <div class="title">
-        <lable >水电开销录入</lable>
+        <lable >水表电表数据录入</lable>
       </div>
       <form id="newData" class="newData">
         <label>年月</label>
@@ -67,7 +92,7 @@
     <div class="clear">
       <div class="paginationDiv">
         <table class="historyTable" id="historyTable">
-            <caption >往月水电明细</caption>
+            <caption >往月水电开支明细</caption>
             <tr>
               <th>年月</th>
               <th>用水量(吨)</th>

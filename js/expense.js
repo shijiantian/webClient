@@ -33,12 +33,7 @@ function getExpenseHistory(pageNo){
 
 function setExpenseHistory(){
     var access_token=getAccessToken1();
-    var formData=new FormData(document.getElementById('newData'));
-    var jsonData={};
-    formData.forEach(function(value,key){
-        jsonData[key]=value;
-    });
-    var jsonObject=JSON.stringify(jsonData);
+    var jsonObject=getJsonformData('newData');
     $.ajax({
         url:serverAddr+'/api/setHistoryExpense',
         method:'post',
@@ -46,8 +41,12 @@ function setExpenseHistory(){
         data:jsonObject,
         async:false,
         contentType: "application/json",
-        success:function(){
-            getExpenseHistory(1);
+        success:function(data){
+            if(data.errorCode==1001){
+                alert(data.result);
+            }else{
+                getExpenseHistory(1);
+            }
         },
         error:function(jqXHR,textStatus,errorThrown){
             if(jqXHR.status==401){
@@ -109,10 +108,10 @@ function setEchart(data){
     myChart.setOption(option);
 }
 
-function getExcel(){
+function getExcel(typeValue){
     var access_token=getAccessToken1();
     $.ajax({
-        url:serverAddr+'/api/getExcel',
+        url:serverAddr+'/api/getExcel/'+typeValue,
         method:'get',
         headers: {'Authorization':access_token},
         success:function(data){
@@ -125,6 +124,42 @@ function getExcel(){
         },
         error:function(jqXHR,textStatus,errorThrown){
 
+        }
+    });
+}
+
+function importExcel(){
+    var access_token=getAccessToken1();
+    // var files = $('#importFile').prop('files');
+    // var formData = new FormData();
+    // formData.append('importFile', files[0]);
+    var formData=new FormData(document.getElementById('fileUploadForm'));
+    $.ajax({
+        url:serverAddr+'/api/importMeterData',
+        method:'POST',
+        data:formData,
+        headers: {'Authorization':access_token},
+        cache: false,
+        // 告诉jQuery不要去处理发送的数据
+        processData: false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType: false,
+        success:function(data){
+            if(data.errorCode===1001){
+                var index=data.result.lastIndexOf('\/');
+                var fileName=data.result.substring(index+1,data.result.length);
+                var a = document.createElement('a');
+                a.href = data.result;
+                a.download = fileName;
+                a.click();
+            }else{
+                alert(data.result);
+                getExpenseHistory(1);
+            }
+        },
+        error:function(jqXHR){
+            alert("error");
+            console.log(jqXHR);
         }
     });
 }
