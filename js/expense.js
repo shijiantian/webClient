@@ -1,6 +1,6 @@
 function getExpenseHistory(pageNo){
     var access_token=getAccessToken1();
-    var pageSize=5;
+    var pageSize=10;
     var totalPage;
     $.ajax({
         url:serverAddr+'/api/getHistoryExpense/'+pageNo+'/'+pageSize,
@@ -20,7 +20,7 @@ function getExpenseHistory(pageNo){
         error:function(jqXHR,textStatus,errorThrown){
             if(jqXHR.status===401){
               refreshAccessToken();
-              getExpenseHistory(pageNo);
+              totalPage=getExpenseHistory(pageNo);
             }else{
                 console.log(jqXHR.status);
                 console.log(textStatus);
@@ -123,7 +123,12 @@ function getExcel(typeValue){
             a.click();
         },
         error:function(jqXHR,textStatus,errorThrown){
-
+            if(jqXHR.status==401){
+                refreshAccessToken();
+                getExcel(typeValue);
+            }else{
+                alert(jqXHR.status);
+            }
         }
     });
 }
@@ -158,8 +163,12 @@ function importExcel(){
             }
         },
         error:function(jqXHR){
-            alert("error");
-            console.log(jqXHR);
+            if(jqXHR.status==401){
+                refreshAccessToken();
+                importExcel();
+            }else{
+                alert(jqXHR.status);
+            }
         }
     });
 }

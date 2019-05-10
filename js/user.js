@@ -1,7 +1,7 @@
 function getUsers(){
   var access_token=getAccessToken1();
   $.ajax({
-    url: serverAddr+'/api/login',
+    url: serverAddr+'/api/loginUser',
     type: 'GET',
     headers: {'Authorization':access_token},
     success:function(data){
