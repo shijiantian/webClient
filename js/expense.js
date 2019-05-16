@@ -42,7 +42,7 @@ function setExpenseHistory(){
         contentType: "application/json",
         success:function(data){
             if(data.errorCode==1001){
-                alert(data.result);
+                showMessageBox(data.errors);
             }else{
                 getExpenseHistory(1);
             }
@@ -51,7 +51,7 @@ function setExpenseHistory(){
             if(jqXHR.status==401 && refreshAccessToken()){
               setExpenseHistory();
             }else{
-                alert(jqXHR.status);
+                showMessageBox(jqXHR.responseJSON.errors);
             }
         }
     });

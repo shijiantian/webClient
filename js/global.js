@@ -52,3 +52,18 @@ function refreshAccessToken(){
     });
     return result;
   }
+
+function showMessageBox(errors){
+    var len=errors.length;
+    for(var i=0;i<len;i++){
+        var inputElement = document.getElementById(errors[i].field);
+        var Box = new MessageBox(inputElement, errors[i].field, errors[i].defaultMessage,0, 10); 
+        Box.Show();
+    }
+}
+
+function removeMsgBox(id){
+    var inputElement = document.getElementById(id);
+    var Box = new MessageBox(inputElement, id, ); 
+    Box.Remove(true);
+}

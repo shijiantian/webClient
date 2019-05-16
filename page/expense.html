@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>水电开支统计</title>
     <script src="../js/global.js"></script>
+    <script src="../js/message.js"></script>
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../js/user.js"></script>
     <script type="text/javascript" src="../js/login.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="../css/fileInput.css">
     <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/message.css">
     <link rel="shortcut icon" href="../icon/favicon.ico">
 
     <script type="text/javascript">
@@ -55,10 +57,10 @@
     <div>
       <form id="fileUploadForm" enctype="multipart/form-data" style="display: inline;">
           <a href="javascript:;" class="file">
-            <input type="file" id="importFile" name="importFile" >选择导入excel文件
+            <input type="file" id="importFile" name="importFile" >选择Excel文件
           </a>
       </form>
-      <button type="button" id="importExcel" onclick="importExcel()">导入水表电表数据</button>
+      <button type="button" id="importExcel" onclick="importExcel()">确认导入</button>
       <p class="showFileName"  style="display: inline; color: red;"></p>
       <div style="display: inline;">
         <button type="button" id="exportExcel" onclick="getExcel(1)">导出水电开支明细</button>
@@ -76,15 +78,15 @@
       </div>
       <form id="newData" class="newData">
         <label>年月</label>
-        <input type="text" readonly="readonly" id="expenseDate" name="expenseDate">
+        <input type="text" readonly="readonly" id="expenseDate" name="expenseDate" onclick='removeMsgBox("expenseDate")'>
         <label>水表数值(吨):</label>
-        <input id="waterCount" name="waterCount">
+        <input id="waterCount" type="number" name="waterCount" onclick='removeMsgBox("waterCount")'>
         <label>用水价格(元/吨)</label>
-        <input id="waterPrice" value="8" name="waterPrice">
+        <input id="waterPrice" type="number" value="8" name="waterPrice" onclick='removeMsgBox("waterPrice")'>
         <label>电表数值(度):</label>
-        <input id="elecCount" name="elecCount">
+        <input id="elecCount" type="number" name="elecCount" onclick='removeMsgBox("elecCount")'>
         <label>用电价格(元/度)</label>
-        <input id="elecPrice" value="1.5" name="elecPrice">
+        <input id="elecPrice" type="number" value="1.5" name="elecPrice" onclick='removeMsgBox("elecPrice")'>
         <input type="button" value="确认" onclick="addNewData()">
       </form>
     </div>

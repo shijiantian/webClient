@@ -14,7 +14,7 @@
 |	// 新建消息气泡对象
 |	var Box = new MessageBox(test, 1, "Test Message..", 50, 10, 5000, true); 
 |	Box.Show(); // 显示气泡，显示成功返回true。
-|	Box.Remove(); // 移除气泡(动画)，移除成功返回true。若不希望移除有动画效果，可传入参数false：Box.Remove(false);
+|	Box.Remove(); // 移除气泡(动画)，移除成功返回true。若不希望移除有动画效果，可传入参数true：Box.Remove(true);
 |	
 |	注意：
 |	1. 除了element与id外，其他属性均可不初始化；
@@ -107,7 +107,7 @@ MessageBox.prototype = {
 		{
 			var mbox = this;
 			this._timeouter = setTimeout(function(){
-				mbox.Remove();
+				mbox.Remove(true);
 			}, this.timeout);
 		}
 		
