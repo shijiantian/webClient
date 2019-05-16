@@ -8,8 +8,7 @@ function getUsers(){
       $('#userInfoLable').text(data.result);
     },
     error:function(jqXHR,textStatus,errorThrown){
-      if(jqXHR.status==401){
-        refreshAccessToken();
+      if(jqXHR.status==401 && refreshAccessToken()){
         getUsers();
       }
     }

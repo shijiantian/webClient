@@ -27,36 +27,10 @@ function loginFunc(){
   });
 }
 
-function refreshAccessToken(){
-  var refresh_token=getRefreshToken();
-  $.ajax({
-    async:false,
-    type:'POST',
-    url:serverAddr+'/oauth/token',
-    data:{
-      grant_type:'refresh_token',
-      client_id:'myClient',
-      client_secret:'mypassword',
-      refresh_token:refresh_token
-    },
-    success:function(data){
-      var access_type=data['token_type'];
-      var access_token=data['access_token'];
-      var refresh_token=data['refresh_token'];
-      window.localStorage.setItem('access_token',access_token);
-      window.localStorage.setItem('access_type',access_type);
-      window.localStorage.setItem('refresh_token',refresh_token);
-    },
-    error:function(jqXHR,textStatus,errorThrown){
-      window.location.href='/webClient/login.html';
-    }
-  });
-}
-
 function logoutFunc(){
   var access_token=getAccessToken2();
   var refresh_token=getRefreshToken();
-  var redirect_dir=serverIp+'/webClient/login.html';
+  var redirect_dir=serverIp+login_page;
   $.ajax({
     type:'POST',
     url:serverAddr+'/api/logout',
