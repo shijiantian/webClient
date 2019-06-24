@@ -696,9 +696,13 @@
           if(status=='success') {
             $.callback(status, $.message());
             $.resumableObj.uploadNextChunk();
-          } else {
+          }else if(status=='invalid_token'){
+            refreshAccessToken();
+            $.callback('retry', $.message());
+            $.test();
+          }else {
             $.send();
-          }
+          } 
         };
         $.xhr.addEventListener('load', testHandler, false);
         $.xhr.addEventListener('error', testHandler, false);
@@ -741,6 +745,8 @@
         // Append the relevant chunk and send it
         $.xhr.open($.getOpt('testMethod'), $h.getTarget('test', params));
         $.xhr.timeout = $.getOpt('xhrTimeout');
+        var access_token=getAccessToken1();
+        $.xhr.setRequestHeader('Authorization',access_token);
         $.xhr.withCredentials = $.getOpt('withCredentials');
         // Add data from header options
         var customHeaders = $.getOpt('headers');
@@ -795,6 +801,9 @@
             $.callback(status, $.message());
             $.resumableObj.uploadNextChunk();
           } else {
+            if(status=='invalid_token'){
+              refreshAccessToken();
+            }
             $.callback('retry', $.message());
             $.abort();
             $.retries++;
@@ -875,6 +884,8 @@
         var method = $.getOpt('uploadMethod');
 
         $.xhr.open(method, target);
+        var access_token=getAccessToken1();
+        $.xhr.setRequestHeader('Authorization',access_token);
         if ($.getOpt('method') === 'octet') {
           $.xhr.setRequestHeader('Content-Type', 'application/octet-stream');
         }
@@ -916,6 +927,8 @@
           if($.xhr.status == 200 || $.xhr.status == 201) {
             // HTTP 200, 201 (created)
             return('success');
+          } else if($.xhr.status == 401 ){
+            return('invalid_token')
           } else if($h.contains($.getOpt('permanentErrors'), $.xhr.status) || $.retries >= $.getOpt('maxChunkRetries')) {
             // HTTP 400, 404, 409, 415, 500, 501 (permanent error)
             return('error');
