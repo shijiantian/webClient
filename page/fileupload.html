@@ -80,7 +80,7 @@
             });
           r.on('fileError', function(file, message){
               // Reflect that the file upload has resulted in error
-              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(file could not be uploaded: '+message+')');
+              $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html('(上传失败: '+message+')');
             });
           r.on('fileProgress', function(file){
             $('.resumable-progress .progress-resume-link').hide();

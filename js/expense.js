@@ -11,7 +11,7 @@ function getExpenseHistory(pageNo){
             totalPage=data.totalPage;
             $(".oldTr").remove();
             $.each(data.result,function(i,item){
-                addRow(data.result[i].expenseDate,data.result[i].waterCount,
+                addRow(data.result[i].id,data.result[i].expenseDate,data.result[i].waterCount,
                         data.result[i].waterPrice,data.result[i].elecCount,
                         data.result[i].elecPrice);
             });
@@ -57,19 +57,40 @@ function setExpenseHistory(){
     });
 }
 
-function addRow(date,water,waterPrice,electricity,elecPrice){
+function addRow(id,date,water,waterPrice,electricity,elecPrice){
     var waterTotal=water*waterPrice;
     var elecTotal=electricity*elecPrice;
     var totalExpense=waterTotal+elecTotal;
-    var trHtml='<tr class="oldTr">'
+    var trHtml='<tr class="oldTr" id='+id+'>'
                 +'<td name="date">'+date+'</td>'
                 +'<td name="water">'+water+'</td>'
                 +'<td name="waterTotal">'+waterTotal+'</td>'
                 +'<td name="electricity">'+electricity+'</td>'
                 +'<td name="elecTotal">'+elecTotal+'</td>'
                 +'<td name="totalExpense">'+totalExpense+'</td>'
+                +'<td name=""><button onclick=deleteRow('+id+')>删除</button></td>'
               +'</tr>'
     $('#historyTable').append(trHtml);
+}
+
+function deleteRow(id){
+    var access_token=getAccessToken1();
+    $.ajax({
+        url:serverAddr+'/api/deleteExpenseHistory/'+id,
+        method:'delete',
+        headers: {'Authorization':access_token},
+        contentType: "application/json",
+        success:function(data){
+            var currentPage=document.getElementsByClassName("page active")[0].getAttribute("jp-data");
+            var pageNum=parseInt(currentPage);
+            getExpenseHistory(pageNum);
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            if(jqXHR.status==401 && refreshAccessToken()){
+                deleteRow(id);
+              }
+        }
+    });
 }
 
 function addNewData(){
