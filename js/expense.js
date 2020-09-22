@@ -44,7 +44,7 @@ function setExpenseHistory(){
             if(data.errorCode==1001){
                 showMessageBox(data.errors);
             }else{
-                getExpenseHistory(1);
+                getMeterHistory(1);
             }
         },
         error:function(jqXHR,textStatus,errorThrown){
@@ -68,12 +68,12 @@ function addRow(id,date,water,waterPrice,electricity,elecPrice){
                 +'<td name="electricity">'+electricity+'</td>'
                 +'<td name="elecTotal">'+elecTotal+'</td>'
                 +'<td name="totalExpense">'+totalExpense+'</td>'
-                +'<td name=""><button onclick=deleteRow('+id+')>删除</button></td>'
+                +'<td name=""><button class="delButt" onclick=deleteRow('+id+',1)>删除</button></td>'
               +'</tr>'
     $('#historyTable').append(trHtml);
 }
 
-function deleteRow(id){
+function deleteRow(id,type){
     var access_token=getAccessToken1();
     $.ajax({
         url:serverAddr+'/api/deleteExpenseHistory/'+id,
@@ -83,7 +83,10 @@ function deleteRow(id){
         success:function(data){
             var currentPage=document.getElementsByClassName("page active")[0].getAttribute("jp-data");
             var pageNum=parseInt(currentPage);
-            getExpenseHistory(pageNum);
+            if(type==1)
+                getExpenseHistory(pageNum);
+            else if(type==2)
+                getMeterHistory(pageNum);
         },
         error:function(jqXHR,textStatus,errorThrown){
             if(jqXHR.status==401 && refreshAccessToken()){
@@ -263,4 +266,47 @@ function importExcel(){
         }
     }
     xhr.send(formData);
+}
+
+function getMeterHistory(pageNo){
+    var access_token=getAccessToken1();
+    var pageSize=10;
+    var totalPage;
+    $.ajax({
+        url:serverAddr+'/api/getMeterHistory/'+pageNo+'/'+pageSize,
+        method:'get',
+        headers: {'Authorization':access_token},
+        async:false,
+        success:function(data){
+            totalPage=data.totalPage;
+            $(".oldTr").remove();
+            $.each(data.result,function(i,item){
+                addMeterRow(data.result[i].id,data.result[i].expenseDate,data.result[i].waterCount,
+                        data.result[i].waterPrice,data.result[i].elecCount,
+                        data.result[i].elecPrice);
+            });
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            if(jqXHR.status===401 && refreshAccessToken()){
+              totalPage=getExpenseHistory(pageNo);
+            }else{
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        }
+    });
+    return totalPage;
+}
+
+function addMeterRow(id,date,water,waterPrice,electricity,elecPrice){
+    var trHtml='<tr class="oldTr" id='+id+'>'
+                +'<td name="date">'+date+'</td>'
+                +'<td name="water">'+water+'</td>'
+                +'<td name="waterTotal">'+waterPrice+'</td>'
+                +'<td name="electricity">'+electricity+'</td>'
+                +'<td name="elecTotal">'+elecPrice+'</td>'
+                +'<td name=""><button class="delButt" onclick=deleteRow('+id+',2)>删除</button></td>'
+              +'</tr>'
+    $('#historyTable').append(trHtml);
 }

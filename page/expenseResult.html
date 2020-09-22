@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>水电开支统计</title>
+    <script src="../js/global.js"></script>
+    <script src="../js/message.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <!-- <script type="text/javascript" src="../js/user.js"></script> -->
+    <!-- <script type="text/javascript" src="../js/login.js"></script> -->
+    <script type="text/javascript" src="../js/expense.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui-datepicker-zh-CN.js"></script>
+    <script type="text/javascript" src="../js/jqPaginator.js"></script>
+    <script type="text/javascript" src="../js/echarts.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/table.css">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/fileInput.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/message.css">
+    <link rel="shortcut icon" href="../icon/favicon.ico">
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#expenseDate').datepicker($.datepicker.regional['zh-CN']).datepicker("setDate", new Date());
+        var totalPage=getExpenseHistory(1);
+        $.jqPaginator('#pagination1', {
+          totalPages: totalPage,
+          visiblePages: 4,
+          currentPage: 1,
+          onPageChange: function (num, type) {
+            //type为init和change两种，如果不设置判断init时会多请求一次
+            if(type==='change'){
+              getExpenseHistory(num);
+            }
+          }
+        });        
+      });
+    </script>
+    
+  </head>
+  <body>
+    <div class="clear">
+      <div class="paginationDiv">
+        <table class="historyTable" id="historyTable">
+            <caption >往月水电开支明细
+              <div class="exportExpense">
+                <a href="javascript:getExcel(1)" id="exportExcel" >导出Excel文件</a>
+              </div>
+            </caption>
+            <tr>
+              <th>年月</th>
+              <th>用水量(吨)</th>
+              <th>水费(元)</th>
+              <th>用电量(度)</th>
+              <th>电费(元)</th>
+              <th>总计(元)</th>
+              <th>操作</th>
+            </tr>
+          </table>
+        <ul style="display: inline-block" class="pagination" id="pagination1"></ul>
+      </div>
+      <div class="chartDiv">
+        <div id="echartMain" style="width: 100%;height:400px;"></div>
+      </div>
+    </div>
+  </body>
+</html>

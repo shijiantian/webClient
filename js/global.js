@@ -1,6 +1,6 @@
 var serverAddr='http://127.0.0.1:8083';
 var serverIp='http://127.0.0.1';
-var login_page='/webClient/login.html';
+var login_page='/login.html';
 
 function getJsonformData(formId){
     var formData=new FormData(document.getElementById(formId));
@@ -57,7 +57,7 @@ function showMessageBox(errors){
     var len=errors.length;
     for(var i=0;i<len;i++){
         var inputElement = document.getElementById(errors[i].field);
-        var Box = new MessageBox(inputElement, errors[i].field, errors[i].defaultMessage,0, 10); 
+        var Box = new MessageBox(inputElement, errors[i].field, errors[i].defaultMessage,20, 40); 
         Box.Show();
     }
 }

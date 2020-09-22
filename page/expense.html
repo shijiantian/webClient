@@ -2,12 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>水电开支统计</title>
+    <title>水表电表数据</title>
     <script src="../js/global.js"></script>
     <script src="../js/message.js"></script>
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../js/user.js"></script>
-    <script type="text/javascript" src="../js/login.js"></script>
     <script type="text/javascript" src="../js/expense.js"></script>
     <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../js/jquery-ui-datepicker-zh-CN.js"></script>
@@ -24,7 +22,7 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $('#expenseDate').datepicker($.datepicker.regional['zh-CN']).datepicker("setDate", new Date());
-        var totalPage=getExpenseHistory(1);
+        var totalPage=getMeterHistory(1);
         $.jqPaginator('#pagination1', {
           totalPages: totalPage,
           visiblePages: 4,
@@ -32,7 +30,7 @@
           onPageChange: function (num, type) {
             //type为init和change两种，如果不设置判断init时会多请求一次
             if(type==='change'){
-              getExpenseHistory(num);
+              getMeterHistory(num);
             }
           }
         });
@@ -40,77 +38,93 @@
         $(".file").on("change","input[type='file']",function(){
             var filePath=$(this).val();
             if(filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
-                var arr=filePath.split('\\');
-                var fileName=arr[arr.length-1];
-                $(".showFileName").html(fileName);
+              var arr=filePath.split('\\');
+              var fileName=arr[arr.length-1];
+              document.getElementById('importFileLabel').innerHTML=fileName;
             }else{
-                $(".showFileName").html("您未上传文件，或者您上传文件类型有误！").show();
-                return false 
+              var ele=document.getElementById('importFileLabel');
+              var Box = new MessageBox(ele, 'importFileLabel',"文件类型有误！",0, 30); 
+              Box.Show();
+              return false 
             }
-        })
+        });
+
+        $(".file").on("click",function(){
+          removeMsgBox("importFileLabel");
+        });
       });
     </script>
     
   </head>
   <body>
     
-    <div>
-      <form id="fileUploadForm" enctype="multipart/form-data" style="display: inline;">
+    <div style="margin-top: 1%">
+      <form id="fileUploadForm" enctype="multipart/form-data" class="fileUploadForm">
           <a href="javascript:;" class="file">
-            <input type="file" id="importFile" name="importFile" >选择Excel文件
+            <input type="file" id="importFile" name="importFile" >
+            <label style="width: 11%;" for="importFile" id="importFileLabel">通过excel文件导入水电数据</label>
           </a>
       </form>
       <button type="button" id="importExcel" onclick="importExcel()">确认导入</button>
-      <p class="showFileName"  style="display: inline; color: red;"></p>
-      <div style="display: inline;">
-        <button type="button" id="exportExcel" onclick="getExcel(1)">导出水电开支明细</button>
-        <button type="button" id="exportExcel" onclick="getExcel(2)">导出水表电表数据</button>
-        <button type="button" onclick="{location.href='fileupload.html'}">文件上传</button>
-        <!-- <button type="button" name="button" onclick="getUsers()">获取用户信息</button> -->
-        <button type="button" name="logoutButton" onclick="logoutFunc()">退出登录</button>
-      </div>
     </div>
     
-    <label id="userInfoLable"></label>
     <br>
     <div >
-      <div class="title">
-        <lable >水表电表数据录入</lable>
-      </div>
       <form id="newData" class="newData">
-        <label>年月</label>
-        <input type="text" readonly="readonly" id="expenseDate" name="expenseDate" onclick='removeMsgBox("expenseDate")'>
-        <label>水表数值(吨):</label>
-        <input id="waterCount" type="number" name="waterCount" onclick='removeMsgBox("waterCount")'>
-        <label>用水价格(元/吨)</label>
-        <input id="waterPrice" type="number" value="8" name="waterPrice" onclick='removeMsgBox("waterPrice")'>
-        <label>电表数值(度):</label>
-        <input id="elecCount" type="number" name="elecCount" onclick='removeMsgBox("elecCount")'>
-        <label>用电价格(元/度)</label>
-        <input id="elecPrice" type="number" value="1.5" name="elecPrice" onclick='removeMsgBox("elecPrice")'>
-        <input type="button" value="确认" onclick="addNewData()">
+        <table class="expenseInputTable">
+          <caption >水表电表数据录入</caption>
+          <tr>
+            <th>年月</th>
+            <th>水表数值(吨)</th>
+            <th>用水价格(元/吨)</th>
+            <th>电表数值(度)</th>
+            <th>用电价格(元/度)</th>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" readonly="readonly" id="expenseDate" name="expenseDate" onclick='removeMsgBox("expenseDate")'>
+            </td>
+            <td>
+              <input id="waterCount" type="number" name="waterCount" onclick='removeMsgBox("waterCount")'>
+            </td>
+            <td>
+              <input id="waterPrice" type="number" value="8" name="waterPrice" onclick='removeMsgBox("waterPrice")'>
+            </td>
+            <td>
+              <input id="elecCount" type="number" name="elecCount" onclick='removeMsgBox("elecCount")'>
+            </td>
+            <td>
+              <input id="elecPrice" type="number" value="1.5" name="elecPrice" onclick='removeMsgBox("elecPrice")'>
+            </td>
+          </tr>
+        </table>
+        <div class="buttonline">
+          <input type="button" value="确认" onclick="addNewData()"/>
+          <input type="reset" value="重置""/>
+        </div>
       </form>
     </div>
 
     <div class="clear">
-      <div class="paginationDiv">
+      <div class="paginationDiv meterTable">
         <table class="historyTable" id="historyTable">
-            <caption >往月水电开支明细</caption>
+            <caption >往月水表电表数据
+              <div class="exportExpense">
+                <a id="exportExcel" href="javascript:getExcel(2)">导出水表电表数据</a>
+              </div>
+          </caption>
             <tr>
               <th>年月</th>
-              <th>用水量(吨)</th>
-              <th>水费(元)</th>
-              <th>用电量(度)</th>
-              <th>电费(元)</th>
-              <th>总计(元)</th>
+              <th>水表数值(吨)</th>
+              <th>用水价格(元/吨)</th>
+              <th>电表数值(度)</th>
+              <th>用电价格(元/度)</th>
               <th>操作</th>
             </tr>
           </table>
         <ul style="display: inline-block" class="pagination" id="pagination1"></ul>
       </div>
-      <div class="chartDiv">
-        <div id="echartMain" style="width: 100%;height:400px;"></div>
-      </div>
+      
     </div>
   </body>
 </html>

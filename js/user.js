@@ -15,6 +15,30 @@ function getUsers(){
   });
 }
 
+function getUserBaseInfo(){
+  var access_token=getAccessToken1();
+  $.ajax({
+    url: serverAddr+'/api/getUserBaseInfo',
+    type: 'GET',
+    headers: {'Authorization':access_token},
+    success:function(data){
+      document.getElementById("name").innerText=data.result.name;
+      document.getElementById("age").innerText=data.result.age;
+      document.getElementById("role").innerText=data.result.roleName;
+      if(data.result.sex==1){
+        document.getElementById("sex").innerText="男";
+      }else{
+        document.getElementById("sex").innerText="女";
+      }
+    },
+    error:function(jqXHR,textStatus,errorThrown){
+      if(jqXHR.status==401 && refreshAccessToken()){
+        getUsers();
+      }
+    }
+  });
+}
+
 function comparePasswd(){
   var passwd=$("#password").val();
   var repeatPasswd=$("#repeatPasswd").val();

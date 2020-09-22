@@ -1,0 +1,19 @@
+.baseInfoTable {
+    margin-left: 35%;
+    margin-top: 10%;
+    width: 20%;
+}
+.baseInfoTable caption {
+    font-size: larger;
+    color: coral;
+}
+
+.baseInfoTable th {
+    width: 50%;
+    font-size: large;
+}
+
+.baseInfoTable td {
+    text-align: center;
+    font-size: large;
+}

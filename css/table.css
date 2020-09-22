@@ -5,8 +5,8 @@
 }
 
 .historyTable caption{
-    color: red;
-    font-size: 20px;
+    font-size: 25px;
+    color:#3071a9;
 }
 
 .historyTable th{
@@ -17,12 +17,75 @@
 }
 
 .historyTable td{
-    border: 1px solid #3071a9;
+    border: 1px solid #01080e;
     text-align: center;
     color:#3071a9;
     height: 20px;
 }
 
-.newData input{
-    width:10%;
+.historyTable .delButt{
+    border: 0 none;
+    outline: none;
+    background: none;
+}
+
+.newData{
+    margin-left: 25%;
+    margin-right: 25%;
+    color:#3071a9;
+}
+
+.newData caption{
+    font-size: 28px;
+}
+
+.newData table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.expenseInputTable th{
+    font-size: 19px;
+    width: 20%;
+    border: 2px solid black;
+    text-align: center;
+}
+.expenseInputTable td{
+    border: 2px solid black;
+}
+
+.expenseInputTable input{
+    width:100%;
+    text-align: center;
+    font-size: 15px;
+    border: 0 none;
+    outline: none;
+}
+
+.buttonline {
+    margin-left: 38%;
+    margin-top: 0.5%;
+    margin-right: 38%;
+}
+.buttonline input {
+    width: 48%;
+}
+
+.fileUploadForm {
+    margin-left: 2%;
+    display: inline;
+}
+
+.exportExpense {
+    display: inline;
+    font-size: 15px;
+}
+
+.exportExpense a {
+    color: red;
+}
+
+.meterTable {
+    margin-left: 25%;
+    margin-right: 10%;
 }

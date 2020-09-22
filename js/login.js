@@ -18,7 +18,7 @@ function loginFunc(){
         window.localStorage.setItem('access_token',access_token);
         window.localStorage.setItem('access_type',access_type);
         window.localStorage.setItem('refresh_token',refresh_token);
-        window.location.href='page/expense.html';
+        window.location.href='page/index.html';
       },
       error:function(){
         alert("登录时发生错误!")
@@ -47,13 +47,4 @@ function logoutFunc(){
       }
     }
   });
-}
-
-
-function keyDown(event){
-  //使用keyCode和which支持不同浏览器
-  var keyValue = event.which || event.keyCode;
-  if(keyValue===13){
-    loginFunc();
-  }
 }

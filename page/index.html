@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>功能大全</title>
+  <script src="../js/global.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="../js/login.js"></script>
+  <script type="text/javascript" src="../js/user.js"></script>
+  <script type="text/javascript" src="../js/layui.js"></script>
+
+  <link rel="stylesheet" href="../css/layui.css">
+
+  <script type="text/javascript">
+    function load_expense() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="expense.html" width="100%" height="100%"></object>';
+    }
+    function load_expenseResult() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="expenseResult.html" width="100%" height="100%"></object>';
+    }
+    function load_file_upload() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="fileupload.html" width="100%" height="100%"</object>'
+    }
+    function loadBaseInfo() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="baseInfo.html" width="100%" height="100%"</object>'
+    }
+    function loadSecurityInfo() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="securityInfo.html" width="100%" height="100%"</object>'
+    }
+
+    layui.use('element', function(){
+      var element = layui.element;
+    });
+
+    window.onload=function(){
+      getUsers();
+      document.getElementById('load_expense').click();
+    }
+  </script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">功能大全</div>
+    <!-- 头部区域 -->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="https://pic1.zhimg.com/80/v2-92597c4c38bf63351309da87d7721656_720w.jpg" class="layui-nav-img">
+          <label id="userInfoLable"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:loadBaseInfo();">基本资料</a></dd>
+          <dd><a href="javascript:loadSecurityInfo();">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="javascript:logoutFunc();">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 导航区域 -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">所有功能</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:load_expense();" id="load_expense">水电数据记录</a></dd>
+            <dd><a href="javascript:load_expenseResult();" id="load_expenseResult">水电开支统计</a></dd>
+            <dd><a href="javascript:load_file_upload();">文件上传</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" id="bodyArea" style="overflow: hidden;">
+    <!-- 内容主体区域 -->
+  </div>
+  
+  <div class="layui-footer" style="text-align: center;">
+    <!-- 底部固定区域 -->
+    hello world
+  </div>
+</div>
+
+</body>
+</html>

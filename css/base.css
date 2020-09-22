@@ -9,11 +9,13 @@
     text-align: center;
     float: left;
     width:50%;
+    margin-top: 5%;
 }
 
 .chartDiv{
     float: right;
     width: 50%;
+    margin-top: 5%;
 }
 
 .clear:after {

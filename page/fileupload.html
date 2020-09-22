@@ -8,9 +8,11 @@
     <script src="../js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <link rel="stylesheet" type="text/css" href="../css/fileInput.css">
+
+
   </head>
   <body>
-    <div id="frame">
+    <div id="frame" class="uploadDiv">
 
       <div class="resumable-drop">
         <a class="resumable-browse file"><u style="text-decoration:none">点击此处上传文件</u></a>
@@ -21,7 +23,7 @@
           <tr>
             <td width="100%">
               <div class="progress-container">
-                <div class="progress-bar"></div>
+                <div class="progress-bar" ></div>
               </div>
             </td>
             <td class="progress-text" nowrap="nowrap"></td>
@@ -39,7 +41,7 @@
         var r = new Resumable({
             target:serverAddr+'/api/fileUpload',
             chunkSize:2*1024*1024,
-            simultaneousUploads:20, //同时上传
+            simultaneousUploads:20, //同时上传数
             testChunks: true,
             throttleProgressCallbacks:1,
             method: "octet"
@@ -88,6 +90,7 @@
               // Handle progress for both the file and the overall upload
               $('.resumable-file-'+file.uniqueIdentifier+' .resumable-file-progress').html(Math.floor(file.progress()*100) + '%');
               $('.progress-bar').css({width:Math.floor(r.progress()*100) + '%'});
+              $('.progress-bar').css({height:10}+'px')
             });
         }
       </script>

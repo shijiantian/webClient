@@ -8,17 +8,25 @@
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="shortcut icon" href="./icon/favicon.ico">
   </head>
+  <script type="text/javascript">
+    $(document).keypress(function(e) {
+      var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+       if (eCode == 13){
+          loginFunc();
+       }
+    });
+  </script>
   <body>
     <div class="loginTableDiv">
       <form>
         <table>
           <tr>
             <th>姓名</th>
-            <td><input type="text" id="username" value="" onkeydown="keyDown(event)"></td>
+            <td><input type="text" id="username" value=""></td>
           </tr>
           <tr>
             <th>密码</th>
-            <td><input type="password" id="password" value="" onkeydown="keyDown(event)"></td>
+            <td><input type="password" id="password" value=""></td>
           <tr>
         </table>
         <button type="button" id="loginButton" name="loginbutton" onclick="loginFunc()">登录</button>

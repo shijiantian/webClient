@@ -29,6 +29,16 @@
                         <td><input id="repeatPasswd" name="repeatPasswd" onkeyup="comparePasswd()" type="password"></td>
                         <td><p id="errorInfo"></p></td>
                     </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td>男<input id="sex" type="radio" name="sex" value="1" checked=yes/>
+                            女<input id="sex" type="radio" name="sex" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>年龄</td>
+                        <td><input id="age" name="age" /></td>
+                    </tr>
                 </table>
                 <button type="button" onclick="userRegister()">提交</button>
             </form>
