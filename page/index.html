@@ -28,6 +28,9 @@
     function loadSecurityInfo() {
       document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="securityInfo.html" width="100%" height="100%"</object>'
     }
+    function loadNewPassword() {
+      document.getElementById("bodyArea").innerHTML = '<object type="text/html" data="newpassword.html" width="100%" height="100%"></object>';
+    }
 
     layui.use('element', function(){
       var element = layui.element;
@@ -76,7 +79,7 @@
     </div>
   </div>
   
-  <div class="layui-body" id="bodyArea" style="overflow: hidden;">
+  <div class="layui-body" id="bodyArea" style="overflow: hidden;position:200px;">
     <!-- 内容主体区域 -->
   </div>
   

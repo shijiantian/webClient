@@ -1,0 +1,157 @@
+.page-body {
+	overflow: hidden
+}
+
+.nav-header {
+	background-color: #23262E
+}
+
+.nav-header-right {
+	position: absolute!important;
+	right: 0;
+	top: 0
+}
+.nav-header-item {
+	position: relative;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	vertical-align: middle;
+	line-height: 60px
+}
+
+.nav-header-item a {
+	display: block;
+	padding: 0 20px;
+	color: #fff;
+	color: rgba(255,255,255,.7);
+	transition: all .3s;
+	-webkit-transition: all .3s
+}
+
+.nav-header-item-child {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 65px;
+	min-width: 100%;
+	line-height: 36px;
+	padding: 5px 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,.12);
+	border: 1px solid #d2d2d2;
+	background-color: #fff;
+	z-index: 100;
+	border-radius: 2px;
+	white-space: nowrap
+}
+
+.nav-left {
+	top: 60px;
+	width: 200px;
+	overflow-x: hidden
+}
+
+.nav-left-scroll {
+	position: relative;
+	width: 220px;
+	height: 100%;
+	overflow-x: hidden
+}
+
+.nav-left-tree {
+	width: 200px;
+	padding: 0
+}
+
+.nav-left-tree-item {
+	display: block;
+	width: 100%;
+	line-height: 45px
+}
+
+.nav-left-tree-item a {
+	position: relative;
+	height: 45px;
+	line-height: 45px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap
+}
+
+.nav-left-tree-item a:hover {
+	background-color: #4E5465
+}
+
+.nav-left-tree-child {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 65px;
+	min-width: 100%;
+	line-height: 36px;
+	padding: 5px 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,.12);
+	border: 1px solid #d2d2d2;
+	background-color: #fff;
+	z-index: 100;
+	border-radius: 2px;
+	white-space: nowrap
+}
+
+.nav-left-tree-child a {
+	color: #333
+}
+
+.nav-left-tree-child a:hover {
+	background-color: #f2f2f2;
+	color: #000
+}
+
+.nav-left-tree-child dd {
+	position: relative
+}
+
+.content-body {
+	position: fixed;
+	top: 60px;
+	bottom: 44px
+}
+
+.nav-logo {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 200px;
+	height: 100%;
+	line-height: 60px;
+	text-align: center;
+	color: #009688;
+	font-size: 16px
+}
+
+.nav-header .layui-nav {
+	background: 0 0
+}
+
+.content-body {
+    position:absolute;
+    left:200px;
+    right:0;
+    top:0;
+    bottom:0;
+    z-index:998;
+    width:auto;
+    overflow-y:auto;
+    box-sizing:border-box
+}
+
+.content-footer {
+	position: fixed;
+	left: 200px;
+	right: 0;
+	bottom: 0;
+	height: 44px;
+	line-height: 44px;
+	padding: 0 15px;
+	background-color: #eee
+}

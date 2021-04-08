@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>安全设置</title>
+        <script src="../js/global.js"></script>
+        <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="../js/user.js"></script>
+        <link rel="stylesheet" href="../css/baseInfo.css">
+    </head>
+    <script type="text/javascript">
+        function submitPwd(){
+            var access_token=getAccessToken1();
+            var jsonObject=getJsonformData('validpasswd');
+            $.ajax({
+                type:'POST',
+                url:serverAddr+'/api/validPasswd',
+                headers: {'Authorization':access_token},
+                data:jsonObject,
+                contentType: "application/json",
+                success:function(data){
+                    if(data.result){
+                        document.getElementById("warring").innerText="";
+                        window.parent.loadNewPassword();
+                    }else{
+                        document.getElementById("warring").innerText="密码错误"
+                    }
+                },
+                error:function(jqXHR,textStatus,errorThrown){
+                    if(jqXHR.status===401 && refreshAccessToken()){
+                        submitPwd();
+                    }else{
+                        alert("error")
+                    }
+                }
+            });
+        }
+    </script>
+    <body>
+        <div>
+            <form id="validpasswd">
+                <table class="baseInfoTable" style="width: 30%;">
+                    <caption>重置密码</caption>
+                    <tr>
+                        <th style="width: 20%;">原密码</td>
+                        <td style="width: 50%;"><input id="oldPasswd" name="oldPasswd" type="password" onkeyup="submitPwd()"></td>
+                        <td style="width: 30%;text-align: left;"><p id="warring" style="color: red;font-size: 12px;"></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><a id="next" href="javascript:submitPwd();">下一步</a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>
